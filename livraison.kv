@@ -1,0 +1,308 @@
+#:kivy 2.2.0
+#:import dp kivy.metrics.dp
+
+
+<BarreNavigation@BoxLayout>:
+    size_hint_y: None
+    height: dp(56)
+    spacing: dp(2)
+    Button:
+        text: "Vendeurs"
+        on_release: app.root.current = "vendeurs"
+    Button:
+        text: "Aujourd'hui"
+        on_release: app.root.current = "aujourdhui"
+    Button:
+        text: "Jours"
+        on_release: app.root.current = "archive_jours"
+    Button:
+        text: "Mois"
+        on_release: app.root.current = "archive_mois"
+
+
+<EcranVendeurs>:
+    name: "vendeurs"
+    BoxLayout:
+        orientation: "vertical"
+        padding: dp(10)
+        spacing: dp(8)
+
+        Label:
+            text: "Vendeurs"
+            font_size: "20sp"
+            bold: True
+            size_hint_y: None
+            height: dp(36)
+
+        BoxLayout:
+            size_hint_y: None
+            height: dp(40)
+            spacing: dp(6)
+            TextInput:
+                id: champ_recherche
+                hint_text: "Rechercher par nom, téléphone ou ID"
+                multiline: False
+                on_text: root.on_recherche(self.text)
+            Button:
+                text: "+ Nouveau"
+                size_hint_x: None
+                width: dp(100)
+                on_release: root.ouvrir_formulaire_nouveau_vendeur()
+
+        ScrollView:
+            BoxLayout:
+                id: liste_vendeurs
+                orientation: "vertical"
+                size_hint_y: None
+                height: self.minimum_height
+                spacing: dp(6)
+
+        BarreNavigation:
+
+
+<EcranDetailVendeur>:
+    name: "detail_vendeur"
+    BoxLayout:
+        orientation: "vertical"
+        padding: dp(10)
+        spacing: dp(8)
+
+        BoxLayout:
+            size_hint_y: None
+            height: dp(36)
+            spacing: dp(6)
+            Button:
+                text: "< Retour"
+                size_hint_x: None
+                width: dp(90)
+                on_release: root.retour()
+            Label:
+                id: titre_ecran
+                text: ""
+                font_size: "18sp"
+                bold: True
+
+        BoxLayout:
+            id: entete_vendeur
+            orientation: "vertical"
+            size_hint_y: None
+            height: self.minimum_height
+
+        Button:
+            id: bouton_ajout_colis
+            text: "+ Ajouter un colis"
+            size_hint_y: None
+            height: dp(40)
+            on_release: root.ouvrir_formulaire_nouveau_colis()
+
+        ScrollView:
+            BoxLayout:
+                id: liste_colis
+                orientation: "vertical"
+                size_hint_y: None
+                height: self.minimum_height
+                spacing: dp(6)
+
+        Label:
+            id: totaux_vendeur
+            text: ""
+            size_hint_y: None
+            height: dp(36)
+            bold: True
+
+
+<EcranAujourdhui>:
+    name: "aujourdhui"
+    BoxLayout:
+        orientation: "vertical"
+        padding: dp(10)
+        spacing: dp(8)
+
+        Label:
+            id: titre_jour
+            text: ""
+            font_size: "18sp"
+            bold: True
+            size_hint_y: None
+            height: dp(32)
+
+        BoxLayout:
+            size_hint_y: None
+            height: dp(40)
+            spacing: dp(6)
+            TextInput:
+                id: champ_carburant
+                hint_text: "Carburant du jour (Ar)"
+                multiline: False
+                input_filter: "float"
+            Button:
+                text: "Enregistrer"
+                size_hint_x: None
+                width: dp(110)
+                on_release: root.enregistrer_carburant()
+
+        ScrollView:
+            BoxLayout:
+                id: liste_colis_jour
+                orientation: "vertical"
+                size_hint_y: None
+                height: self.minimum_height
+                spacing: dp(6)
+
+        Label:
+            id: totaux_jour
+            text: ""
+            size_hint_y: None
+            height: dp(36)
+            bold: True
+
+        BarreNavigation:
+
+
+<EcranArchiveJours>:
+    name: "archive_jours"
+    BoxLayout:
+        orientation: "vertical"
+        padding: dp(10)
+        spacing: dp(8)
+
+        Label:
+            text: "Archive par jour"
+            font_size: "20sp"
+            bold: True
+            size_hint_y: None
+            height: dp(36)
+
+        ScrollView:
+            BoxLayout:
+                id: liste_jours
+                orientation: "vertical"
+                size_hint_y: None
+                height: self.minimum_height
+                spacing: dp(6)
+
+        BarreNavigation:
+
+
+<EcranDetailJour>:
+    name: "detail_jour"
+    BoxLayout:
+        orientation: "vertical"
+        padding: dp(10)
+        spacing: dp(8)
+
+        BoxLayout:
+            size_hint_y: None
+            height: dp(36)
+            spacing: dp(6)
+            Button:
+                text: "< Retour"
+                size_hint_x: None
+                width: dp(90)
+                on_release: root.retour()
+            Label:
+                id: titre_jour_detail
+                text: ""
+                font_size: "16sp"
+                bold: True
+
+        Label:
+            id: carburant_jour_detail
+            text: ""
+            size_hint_y: None
+            height: dp(28)
+
+        ScrollView:
+            BoxLayout:
+                id: liste_colis_jour_detail
+                orientation: "vertical"
+                size_hint_y: None
+                height: self.minimum_height
+                spacing: dp(6)
+
+        Label:
+            id: totaux_jour_detail
+            text: ""
+            size_hint_y: None
+            height: dp(36)
+            bold: True
+
+
+<EcranArchiveMois>:
+    name: "archive_mois"
+    BoxLayout:
+        orientation: "vertical"
+        padding: dp(10)
+        spacing: dp(8)
+
+        Label:
+            text: "Archive mensuelle"
+            font_size: "20sp"
+            bold: True
+            size_hint_y: None
+            height: dp(36)
+
+        ScrollView:
+            BoxLayout:
+                id: liste_mois
+                orientation: "vertical"
+                size_hint_y: None
+                height: self.minimum_height
+                spacing: dp(6)
+
+        BarreNavigation:
+
+
+<EcranDetailMois>:
+    name: "detail_mois"
+    BoxLayout:
+        orientation: "vertical"
+        padding: dp(10)
+        spacing: dp(8)
+
+        BoxLayout:
+            size_hint_y: None
+            height: dp(36)
+            spacing: dp(6)
+            Button:
+                text: "< Retour"
+                size_hint_x: None
+                width: dp(90)
+                on_release: root.retour()
+            Label:
+                id: titre_mois
+                text: ""
+                font_size: "18sp"
+                bold: True
+
+        Label:
+            id: totaux_mois
+            text: ""
+            size_hint_y: None
+            height: dp(52)
+
+        Label:
+            text: "Lieux les plus fréquents"
+            bold: True
+            size_hint_y: None
+            height: dp(28)
+
+        BoxLayout:
+            id: liste_lieux
+            orientation: "vertical"
+            size_hint_y: None
+            height: self.minimum_height
+
+        Label:
+            text: "Vendeurs actifs ce mois"
+            bold: True
+            size_hint_y: None
+            height: dp(28)
+
+        ScrollView:
+            BoxLayout:
+                id: liste_vendeurs_mois
+                orientation: "vertical"
+                size_hint_y: None
+                height: self.minimum_height
+                spacing: dp(6)
